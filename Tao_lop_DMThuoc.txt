@@ -1,0 +1,93 @@
+﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+
+
+class DMThuoc {
+private:
+    std::string maThuoc;
+    std::string tenThuoc;
+    std::string donviTinh;
+    int giaBan;
+    std::string congDung;
+
+
+public:
+    DMThuoc() : maThuoc(""), tenThuoc(""), donviTinh(""), giaBan(0), congDung("") {}
+
+
+    DMThuoc(std::string maThuoc, std::string tenThuoc, std::string donviTinh, int giaBan, std::string congDung) {
+        this->maThuoc = maThuoc;
+        this->tenThuoc = tenThuoc;
+        this->donviTinh = donviTinh;
+        this->giaBan = giaBan;
+        this->congDung = congDung;
+    }
+
+
+    void setmaThuoc(std::string ma) { maThuoc = ma; }
+    void settenThuoc(std::string ten) { tenThuoc = ten; }
+    void setdonviTinh(std::string dv) { donviTinh = dv; }
+    void setgiaBan(int gb) { giaBan = gb; }
+    void setcongDung(std::string cd) { congDung = cd; }
+
+
+    std::string getmaThuoc() const { return maThuoc; }
+    std::string gettenThuoc() const { return tenThuoc; }
+    std::string getdonviTinh() const { return donviTinh; }
+    int getgiaBan() const { return giaBan; }
+    std::string getcongDung() const { return congDung; }
+
+
+    void hienThiThongTin() const {
+        std::cout << "Ma Thuoc: " << maThuoc << std::endl;
+        std::cout << "Ten thuoc: " << tenThuoc << std::endl;
+        std::cout << "Don vi tinh: " << donviTinh << std::endl;
+        std::cout << "Gia ban: " << giaBan << std::endl;
+        std::cout << "Cong dung: " << congDung << std::endl;
+        std::cout << "-------------------------" << std::endl;
+    }
+};
+
+
+int main() {
+    std::vector<DMThuoc> danhSachthuoc;
+    std::ifstream file("DMThuoc.txt");
+
+
+    if (file.is_open()) {
+        std::string maThuoc, tenThuoc, donviTinh, congDung;
+        int giaBan;
+
+
+        while (std::getline(file, maThuoc)) {
+            std::getline(file, tenThuoc);
+            std::getline(file, donviTinh);
+            file >> giaBan;
+            file.ignore();
+            std::getline(file, congDung);
+
+
+            DMThuoc thuoc(maThuoc, tenThuoc, donviTinh, giaBan, congDung);
+            danhSachthuoc.push_back(thuoc);
+        }
+
+
+        file.close();
+
+
+        std::cout << "Thong tin danh muc thuoc:" << std::endl;
+                for (size_t i = 0; i < danhSachthuoc.size(); i++) {
+                    danhSachthuoc[i].hienThiThongTin();
+}
+    } else {
+        std::cerr << "Không the mo file DMThuoc_notepad++.txt" << std::endl;
+        return 1;
+    }
+
+
+    return 0;
+}

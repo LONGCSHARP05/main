@@ -1,0 +1,100 @@
+﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+class DMThuoc {
+protected:
+    std::string MaThuoc;
+
+
+public:
+    DMThuoc() : MaThuoc("") {}
+    DMThuoc(std::string maThuoc) : MaThuoc(maThuoc) {}
+};
+
+
+class DMChuNuoi {
+protected:
+    std::string MaChuNuoi;
+
+
+public:
+    DMChuNuoi() : MaChuNuoi("") {}
+    DMChuNuoi(std::string maChuNuoi) : MaChuNuoi(maChuNuoi) {}
+};
+
+
+class PhieuKhamBenh : public DMThuoc, public DMChuNuoi {
+private:
+    std::string SoPhieu;
+    std::string NgayKham;
+    int SoLuong;
+    std::string TrieuChung;
+    std::string ChanDoan;
+
+
+public:
+    PhieuKhamBenh() : SoPhieu(""), NgayKham(""), SoLuong(0), TrieuChung(""), ChanDoan("") {}
+
+
+    PhieuKhamBenh(std::string soPhieu, std::string ngayKham, std::string maChuNuoi, std::string maThuoc,
+                   int soLuong, std::string trieuChung, std::string chanDoan)
+        : SoPhieu(soPhieu), NgayKham(ngayKham), SoLuong(soLuong), TrieuChung(trieuChung), ChanDoan(chanDoan),
+          DMChuNuoi(maChuNuoi), DMThuoc(maThuoc) {}
+
+
+    void hienThiThongTin() const {
+        std::cout << "So Phieu: " << SoPhieu << std::endl;
+        std::cout << "Ngay Kham: " << NgayKham << std::endl;
+        std::cout << "Ma Chu Nuoi: " << MaChuNuoi << std::endl;
+        std::cout << "Ma Thuoc: " << MaThuoc << std::endl;
+        std::cout << "So Luong: " << SoLuong << std::endl;
+        std::cout << "Trieu Chung: " << TrieuChung << std::endl;
+        std::cout << "Chan Doan: " << ChanDoan << std::endl;
+        std::cout << "-------------------------" << std::endl;
+    }
+};
+
+
+int main() {
+    std::vector<PhieuKhamBenh> phieukhambenh;
+    std::ifstream file("PhieuKhamBenh (1).notepad++");
+
+
+    if (file.is_open()) {
+        std::string SoPhieu, NgayKham, MaChuNuoi, MaThuoc, TrieuChung, ChanDoan;
+        int SoLuong;
+
+
+        while (std::getline(file, SoPhieu)) {
+            std::getline(file, NgayKham);
+            std::getline(file, MaChuNuoi);
+            std::getline(file, MaThuoc);
+            file >> SoLuong;
+            file.ignore();
+            std::getline(file, TrieuChung);
+            std::getline(file, ChanDoan);
+
+
+            PhieuKhamBenh pkb(SoPhieu, NgayKham, MaChuNuoi, MaThuoc, SoLuong, TrieuChung, ChanDoan);
+            phieukhambenh.push_back(pkb);
+        }
+
+
+        file.close();
+
+
+        std::cout << "Danh sách Phi?u Khám B?nh:" << std::endl;
+        for (size_t i = 0; i < phieukhambenh.size(); i++) {
+                    phieukhambenh[i].hienThiThongTin();
+        }
+    } else {
+        std::cerr << "Không th? m? file PhieuKhamBenh.txt" << std::endl;
+        return 1;
+    }
+
+
+    return 0;
+}

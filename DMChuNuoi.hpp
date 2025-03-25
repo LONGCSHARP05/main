@@ -57,6 +57,17 @@ class DMChuNuoi {
         }
         file.close();
     }
+
+ // Hàm hiển thị thông tin chủ nuôi
+    void hienThi() const {
+        cout << left << setw(10) << maKH
+             << setw(20) << tenChuNuoi
+             << setw(50) << diaChi
+             << setw(15) << soDienThoai
+             << setw(15) << thongTinThuCung << endl;
+    }
+};
+
 };
    
     
